@@ -3,7 +3,7 @@ import 'package:weather/data/remote/utils.dart';
 class WeatherDataDto {
   List<String> time;
   List<double> temperatures;
-  List<int> wheaterCodes;
+  List<int> weatherCodes;
   List<double> pressures;
   List<double> windSpeeds;
   List<double> humidities;
@@ -11,7 +11,7 @@ class WeatherDataDto {
   WeatherDataDto(
     this.time,
     this.temperatures,
-    this.wheaterCodes,
+    this.weatherCodes,
     this.pressures,
     this.windSpeeds,
     this.humidities,

@@ -1,4 +1,4 @@
-import 'package:weather/data/remote/weather_dto.dart';
+import 'package:weather/data/remote/models/weather_dto.dart';
 
 abstract class WeatherApi {
 

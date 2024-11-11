@@ -1,4 +1,4 @@
-import 'package:weather/data/remote/weather_data_dto.dart';
+import 'package:weather/data/remote/models/weather_data_dto.dart';
 
 class WeatherDto {
   WeatherDataDto weatherData;

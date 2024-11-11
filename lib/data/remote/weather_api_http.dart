@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:weather/data/remote/weather_api.dart';
-import 'package:weather/data/remote/weather_dto.dart';
+import 'package:weather/data/remote/models/weather_dto.dart';
 import 'package:http/http.dart' as http;
 
 class WeatherApiHttp implements WeatherApi {
