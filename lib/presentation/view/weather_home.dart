@@ -2,7 +2,7 @@ import 'dart:developer' as developer;
 
 import 'package:flutter/material.dart';
 import 'package:weather/data/remote/weather_api.dart';
-import 'package:weather/data/remote/weather_api_mock.dart';
+import 'package:weather/data/remote/weather_api_http.dart';
 import 'package:weather/data/weather_repository_impl.dart';
 import 'package:weather/domain/repository/weather_repository.dart';
 
@@ -30,7 +30,7 @@ class _WeatherHome extends State<WeatherHome> {
   }
 
   void setupDependencies() {
-    weatherApi = WeatherApiMock();
+    weatherApi = WeatherApiHttp();
     weatherRepository = WeatherRepositoryImpl(weatherApi: weatherApi);
   }
 
