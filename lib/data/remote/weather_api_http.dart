@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:weather/data/remote/weather_api.dart';
-import 'package:weather/data/remote/models/weather_dto.dart';
 import 'package:http/http.dart' as http;
+import 'package:weather/data/remote/models/weather_dto.dart';
+import 'package:weather/data/remote/weather_api.dart';
 
 class WeatherApiHttp implements WeatherApi {
   final Uri baseUri = Uri().resolve("https://api.open-meteo.com/");
@@ -13,13 +13,13 @@ class WeatherApiHttp implements WeatherApi {
     final Map<String, dynamic> queryParameters = {
       "latitude": latitude.toString(),
       "longitude": longitude.toString(),
-      "hourly": [
+      "hourly[]": [
         "temperature_2m",
         "weathercode",
         "relativehumidity_2m",
         "windspeed_10m",
         "pressure_msl",
-      ].join(',')
+      ]
     };
     Uri getWheaterDataUri =
         baseUri.replace(path: path, queryParameters: queryParameters);
