@@ -7,6 +7,8 @@ import 'package:weather/data/weather_repository_impl.dart';
 import 'package:weather/domain/repository/weather_repository.dart';
 
 import '../../domain/model/weather_info.dart';
+import '../widgets/weather_card.dart';
+import '../widgets/weather_forecast.dart';
 
 class WeatherHome extends StatefulWidget {
   const WeatherHome({super.key});
@@ -46,13 +48,40 @@ class _WeatherHome extends State<WeatherHome> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: weatherInfo,
-        builder: (context, snapshot) {
-          return Center(
-              child: snapshot.hasData
-                  ? const Text('Success on getting weather info')
-                  : const CircularProgressIndicator());
-        });
+    return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.blue,
+          title: const Text(
+            "Weather",
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        body: FutureBuilder(
+            future: weatherInfo,
+            builder: (context, snapshot) {
+              if (snapshot.hasData &&
+                  snapshot.data?.currentWeatherData != null) {
+                return Container(
+                  color: Colors.blue[900],
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      WeatherCard(
+                          weatherData: snapshot.data!.currentWeatherData!,
+                          backgroundColor: Colors.blue[700]!),
+                      const SizedBox(height: 16),
+                      WeatherForecast(
+                          weatherDataList:
+                              snapshot.data!.weatherDataPerDay[0] ?? []),
+                    ],
+                  ),
+                );
+              }
+
+              return const Center(child: CircularProgressIndicator());
+            }));
   }
 }
