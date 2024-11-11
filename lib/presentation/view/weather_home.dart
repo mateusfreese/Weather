@@ -79,6 +79,16 @@ class _WeatherHome extends State<WeatherHome> {
                     ],
                   ),
                 );
+              } else if (snapshot.hasError) {
+                return Center(
+                  child: Text(
+                    '${snapshot.error}',
+                    style: const TextStyle(
+                      color: Colors.red,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                );
               }
 
               return const Center(child: CircularProgressIndicator());
