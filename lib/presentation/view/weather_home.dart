@@ -64,21 +64,23 @@ class _WeatherHome extends State<WeatherHome> {
             builder: (context, snapshot) {
               if (snapshot.hasData &&
                   snapshot.data?.currentWeatherData != null) {
-                return Container(
-                  color: Colors.blue[900],
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      WeatherCard(
-                          weatherData: snapshot.data!.currentWeatherData!,
-                          backgroundColor: Colors.blue[700]!),
-                      const SizedBox(height: 16),
-                      WeatherForecast(
-                          weatherDataList:
-                              snapshot.data!.weatherDataPerDay[0] ?? []),
-                    ],
-                  ),
-                );
+                return SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: Container(
+                      color: Colors.blue[900],
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          WeatherCard(
+                              weatherData: snapshot.data!.currentWeatherData!,
+                              backgroundColor: Colors.blue[700]!),
+                          const SizedBox(height: 16),
+                          WeatherForecast(
+                              weatherDataList:
+                                  snapshot.data!.weatherDataPerDay[0] ?? []),
+                        ],
+                      ),
+                    ));
               } else if (snapshot.hasError) {
                 return Center(
                   child: Text(
