@@ -1,14 +1,17 @@
 import 'dart:developer' as developer;
 
 import 'package:flutter/material.dart';
+import 'package:weather/data/device/location_service.dart';
 import 'package:weather/data/remote/weather_api.dart';
 import 'package:weather/data/remote/weather_api_http.dart';
-import 'package:weather/data/weather_repository_impl.dart';
+import 'package:weather/data/repository/location_repository_impl.dart';
+import 'package:weather/data/repository/weather_repository_impl.dart';
+import 'package:weather/domain/model/location.dart';
+import 'package:weather/domain/model/weather_info.dart';
+import 'package:weather/domain/repository/location_repository.dart';
 import 'package:weather/domain/repository/weather_repository.dart';
-
-import '../../domain/model/weather_info.dart';
-import '../widgets/weather_card.dart';
-import '../widgets/weather_forecast.dart';
+import 'package:weather/presentation/widgets/weather_card.dart';
+import 'package:weather/presentation/widgets/weather_forecast.dart';
 
 class WeatherHome extends StatefulWidget {
   const WeatherHome({super.key});
@@ -19,8 +22,10 @@ class WeatherHome extends StatefulWidget {
 
 class _WeatherHome extends State<WeatherHome> {
   late final WeatherApi weatherApi;
+  late final LocationService locationService;
   late final WeatherRepository weatherRepository;
-  late Future<WeatherInfo> weatherInfo;
+  late final LocationRepository locationRepository;
+  Future<WeatherInfo?> weatherInfo = Future.value();
 
   @override
   void initState() {
@@ -32,18 +37,28 @@ class _WeatherHome extends State<WeatherHome> {
   void setupDependencies() {
     weatherApi = WeatherApiHttp();
     weatherRepository = WeatherRepositoryImpl(weatherApi: weatherApi);
+
+    locationService = LocationService();
+    locationRepository =
+        LocationRepositoryImpl(locationService: locationService);
   }
 
-  void getWeatherData() {
+  void getWeatherData() async {
     developer.log('Get Weather Info');
 
-    weatherInfo = weatherRepository.getWeatherInfo();
+    try {
+      Location location = await locationRepository.getLocation();
 
-    weatherInfo.then((onValue) {
-      developer.log('GetWeatherInfo then: ${onValue.toString()}');
-    }).catchError((onError) {
-      developer.log('Error on getWeatherData', error: onError);
-    });
+      WeatherInfo newWeatherInfo = await weatherRepository.getWeatherInfo(location);
+
+      setState(() {
+        weatherInfo = Future<WeatherInfo>.value(newWeatherInfo);
+      });
+    } catch(e) {
+      setState(() {
+        weatherInfo = Future<WeatherInfo>.error(e);
+      });
+    }
   }
 
   @override

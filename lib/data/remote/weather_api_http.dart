@@ -3,16 +3,17 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:weather/data/remote/models/weather_dto.dart';
 import 'package:weather/data/remote/weather_api.dart';
+import 'package:weather/domain/model/location.dart';
 
 class WeatherApiHttp implements WeatherApi {
   final Uri baseUri = Uri().resolve("https://api.open-meteo.com/");
 
   @override
-  Future<WeatherDto> getWeatherData(double latitude, double longitude) async {
+  Future<WeatherDto> getWeatherData(Location location) async {
     const String path = "/v1/forecast";
     final Map<String, dynamic> queryParameters = {
-      "latitude": latitude.toString(),
-      "longitude": longitude.toString(),
+      "latitude": location.latitude.toString(),
+      "longitude": location.longitude.toString(),
       "hourly[]": [
         "temperature_2m",
         "weathercode",

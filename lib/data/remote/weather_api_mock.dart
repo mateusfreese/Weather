@@ -2,10 +2,11 @@ import 'dart:convert';
 
 import 'package:weather/data/remote/models/weather_dto.dart';
 import 'package:weather/data/remote/weather_api.dart';
+import 'package:weather/domain/model/location.dart';
 
 class WeatherApiMock implements WeatherApi {
   @override
-  Future<WeatherDto> getWeatherData(double latitude, double longitude) async {
+  Future<WeatherDto> getWeatherData(Location location) async {
     return WeatherDto.fromJson(jsonDecode(responseBody));
   }
 }
