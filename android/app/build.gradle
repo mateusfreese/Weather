@@ -42,3 +42,8 @@ android {
 flutter {
     source = "../.."
 }
+
+dependencies {
+    // Location Services
+    implementation 'com.google.android.gms:play-services-location:21.3.0'
+}

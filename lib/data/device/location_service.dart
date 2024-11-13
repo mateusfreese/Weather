@@ -10,7 +10,7 @@ class LocationService {
   Future<Location> getLocation() {
     // TODO("Implement services in android and iOS")
     return channel
-        .invokeMapMethod<String, double>("getGeolocation")
+        .invokeMapMethod<String, double>("getLocation")
         .then((onValue) => onValue!.toLocation());
   }
 }
