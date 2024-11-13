@@ -54,13 +54,14 @@ extension WeatherDataDtoExtension on WeatherDataDto {
 
 extension WeatherDtoExtension on WeatherDto {
   WeatherInfo toWeatherInfo() {
-    Map<int, List<WeatherData>> weatherDataMap = weatherData.toWeatherDataMap();
-    DateTime now = DateTime.now();
+    const todayIndex = 0;
+    const weatherAheadTime = Duration(minutes: 30);
 
-    // Find current hour's weather data
-    int currentHour = now.minute < 30 ? now.hour : now.hour + 1;
-    WeatherData? currentWeatherData = weatherDataMap[0]?.firstWhere(
-          (data) => data.time.hour == currentHour
+    var now = DateTime.now().add(weatherAheadTime);
+    var weatherDataMap = weatherData.toWeatherDataMap();
+
+    WeatherData? currentWeatherData = weatherDataMap[todayIndex]?.firstWhere(
+          (data) => data.time.hour == now.hour
     );
 
     return WeatherInfo(
