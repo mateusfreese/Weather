@@ -1,6 +1,5 @@
-import 'dart:developer' as developer;
-
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:weather/data/device/location_service.dart';
 import 'package:weather/data/remote/weather_api.dart';
 import 'package:weather/data/remote/weather_api_http.dart';
@@ -31,7 +30,7 @@ class _WeatherHome extends State<WeatherHome> {
   void initState() {
     super.initState();
     setupDependencies();
-    getWeatherData();
+    getScreenData();
   }
 
   void setupDependencies() {
@@ -43,17 +42,30 @@ class _WeatherHome extends State<WeatherHome> {
         LocationRepositoryImpl(locationService: locationService);
   }
 
-  void getWeatherData() async {
-    developer.log('Get Weather Info');
+  Future<void> checkLocationPermission() async {
+    switch(await Permission.location.request()) {
+      case PermissionStatus.granted:
+        return;
+      default:
+        throw Exception("No Location Permission");
+    }
+  }
 
+  Future<void> getWeatherData() async {
+    Location location = await locationRepository.getLocation();
+
+    WeatherInfo newWeatherInfo =
+        await weatherRepository.getWeatherInfo(location);
+
+    setState(() {
+      weatherInfo = Future<WeatherInfo>.value(newWeatherInfo);
+    });
+  }
+
+  void getScreenData() async {
     try {
-      Location location = await locationRepository.getLocation();
-
-      WeatherInfo newWeatherInfo = await weatherRepository.getWeatherInfo(location);
-
-      setState(() {
-        weatherInfo = Future<WeatherInfo>.value(newWeatherInfo);
-      });
+      await checkLocationPermission();
+      await getWeatherData();
     } catch(e) {
       setState(() {
         weatherInfo = Future<WeatherInfo>.error(e);
