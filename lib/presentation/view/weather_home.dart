@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:weather/data/device/location_service.dart';
@@ -94,6 +96,7 @@ class _WeatherHome extends State<WeatherHome> {
                 return SingleChildScrollView(
                     scrollDirection: Axis.vertical,
                     child: Container(
+                      height: MediaQuery.of(context).size.height,
                       color: Colors.blue[900],
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
