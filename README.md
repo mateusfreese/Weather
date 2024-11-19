@@ -1,16 +1,15 @@
-# wheather
+Weather
+============
+Weather keeps you informed about conditions including temperature, rain, snow and wind. Check out the forecast by the hour for all the current day.
 
-A new Flutter project.
+# Features
 
-## Getting Started
+## Forecasts
 
-This project is a starting point for a Flutter application.
+Quickly check current and forecasted conditions by the hour for the next 10 days for temperature, wind, humidity, dew point, feels like temperature, UV index, barometric pressure and visibility.
 
-A few resources to get you started if this is your first Flutter project:
+## Screenshots
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+| iOS                                  | Android                                  |
+|--------------------------------------|------------------------------------------|
+| ![](/docs/images/screenshot_ios.png) | ![](/docs/images/screenshot_android.png) |
